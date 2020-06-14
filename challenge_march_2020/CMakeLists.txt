@@ -1,0 +1,3 @@
+cmake_minimum_required(VERSION 3.15)
+
+add_subdirectory(Product_of_Array_Except_Self)
