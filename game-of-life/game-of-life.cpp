@@ -13,7 +13,8 @@ public:
             curr_r = r + dr[i];
             curr_c = c + dc[i];
             if (curr_r>= 0 && curr_r < m && curr_c >= 0 && curr_c < n) {
-                if (board[curr_r][curr_c] == 1)
+                // if it will remain alive or alive and will be dead next cycle
+                if (board[curr_r][curr_c] == 1 || board[curr_r][curr_c] == 3)
                     ++res;
             }
         }
@@ -23,12 +24,12 @@ public:
     
     void gameOfLife(vector<vector<int>>& board) {
         // copy board
-        vector<vector<int>> temp(board.size(), vector<int>(board[0].size()));
-        for(int i = 0; i < board.size(); ++ i) {
-            for(int j = 0; j < board[0].size(); ++j) {
-                temp[i][j] = board[i][j];
-            }
-        }
+        // vector<vector<int>> temp(board.size(), vector<int>(board[0].size()));
+        // for(int i = 0; i < board.size(); ++ i) {
+        //     for(int j = 0; j < board[0].size(); ++j) {
+        //         temp[i][j] = board[i][j];
+        //     }
+        // }
         // loop over every element
         for(int i = 0; i < board.size(); ++ i) {
             for(int j = 0; j < board[0].size(); ++j) {
@@ -38,18 +39,25 @@ public:
                 // in the copies one
                 if(stat) {
                     if (l_n < 2 || l_n > 3)
-                        temp[i][j] = 0;
+                        // temp[i][j] = 0;
+                        board[i][j] = 3;
                 } else {
                     if (l_n == 3)
-                        temp[i][j] = 1;
+                        // temp[i][j] = 1;
+                        board[i][j] = 2;
                 }
             }
         }
         
         // refer to the copied one
+        // board = temp;
         for(int i = 0; i < board.size(); ++ i) {
             for(int j = 0; j < board[0].size(); ++j) {
-                board[i][j] = temp[i][j];
+                if(board[i][j] == 3)
+                    board[i][j] = 0;
+                if (board[i][j] == 2)
+                    board[i][j] = 1;
+                // board[i][j] = temp[i][j];
             }
         }
         
