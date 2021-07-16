@@ -10,17 +10,26 @@
  */
 class Solution {
 public:
+    /*
+    for each node:
+        give me the reversed list next to me
+        add me to the returned list
+        pass the new head to the node before me
+    */   
     ListNode* reverseList(ListNode* head) {
-        ListNode* prev = nullptr;
-        ListNode* curr = head;
-        while(curr != nullptr) {
-            ListNode* temp = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = temp;
-        }
+        // base case
+        if(head == nullptr || head->next == nullptr)
+            return head;
+        // get the new head
+        ListNode* temp = reverseList(head->next);
+        // add me to the list
+        head->next->next = head;
+        // this step is important to make the last node refer to null !
+        head->next = nullptr;
+        return temp;
         
-        return prev;
+        
+        
             
         
         
