@@ -1,19 +1,39 @@
 class Solution {
 public:
-    vector<int> temp;
-    int kthSmallest(vector<vector<int>>& matrix, int k) {
-        int n = matrix.size();
-        for(int i =0;i < n; ++i) {
-            for(int j =0;j < n; ++j) {
-                temp.push_back(matrix[i][j]);
-            }
-            
+
+    struct compare {
+        bool operator() (tuple<int, int, int> lhs, tuple<int, int, int> rhs) {
+            auto [le, lr, lc] = lhs;
+            auto [re, rr, rc] = rhs;
+
+
+            return le > re;
         }
-        
-        sort(temp.begin(), temp.end());
-        
-        
-        
-        return  temp[k-1];
+    };
+
+    priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, compare> pq;
+
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        // push the elements in the first row to the pq
+        int N = matrix.size();
+        for(int i =0; i < N ; ++i) {
+            pq.push({matrix[0][i], 0, i});
+        }
+
+        // repeat for k-1 steps
+        for(int i = 0; i < k-1 ; ++i) {
+
+            int val = get<0>(pq.top());
+            int row = get<1>(pq.top());
+            int col = get<2>(pq.top());
+            pq.pop();
+            if(++row < N)
+                pq.push(make_tuple(matrix[row][col], row, col));
+        }
+
+
+
+        auto [e, row, col] = pq.top();
+        return  e;
     }
 };
