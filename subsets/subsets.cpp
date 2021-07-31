@@ -1,43 +1,31 @@
 class Solution {
 public:
+    vector<vector<int>> res;
+    int N;
+    int K;
     
+    void backtrack(int idx, vector<int>& curr, vector<int>& nums) {
+        if(curr.size() == K) {
+            res.push_back(vector<int>(curr.begin(), curr.end()));
+            return;
+        }
+        for(int i = idx; i < N; ++i) {
+            curr.push_back(nums[i]);
+            backtrack(i+1, curr, nums);
+            curr.erase(curr.end()- 1);
+        }
+            
+    }
     
-
-    vector<int> copy_v(vector<int>& v) {
-        vector<int> res;
-        for(auto e: v) {
-            res.push_back(e);
+    vector<vector<int>> subsets(vector<int>& nums) {
+        
+        N = nums.size();
+        vector<int> curr = {};
+        for(K = 0; K < N+1; ++K) {
+            backtrack(0, curr, nums);
         }
         
         return res;
-    }
-    
-    
-    vector<vector<int>> subsets(vector<int>& nums) {
-        vector<vector<int>> subsets;
         
-        subsets.push_back({});
-        
-        int N = nums.size();
-        
-        for (int i = 0; i < N; ++i) {
-            vector<vector<int>> new_subsets;
-            for(auto v: subsets) {
-                vector<int> temp = copy_v(v);
-                temp.push_back(nums[i]);
-                new_subsets.push_back(temp);
-            }
-            
-            // new_subsets.push_back({nums[i]});
-            
-            for( auto v: new_subsets) {
-                subsets.push_back(v);
-            }
-        }
-        
-        
-        return subsets;
-       
-            
     }
 };
