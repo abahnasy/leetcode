@@ -1,29 +1,43 @@
 class Solution {
 public:
-    vector<vector<int>> subsets(vector<int>& nums) {
-        vector<vector<int>> res;
-        int N = nums.size();
-        N = pow(2, N);
-        
-        for(int i = 0; i < N; ++i) {
-            // i should be represented as binary
-            vector<int> temp_res = vector<int>();
-            int idx = 0;
-            int temp = i;
-            while(temp) {
-                // cout << "investigating " << temp << "\n";
-                if (temp&0x01) {
-                    temp_res.push_back(nums[idx]);
-                }
-                temp = temp >> 1;
-                ++idx;
-                
-            }
-            res.push_back(temp_res);
-            
-            
+    
+    
+
+    vector<int> copy_v(vector<int>& v) {
+        vector<int> res;
+        for(auto e: v) {
+            res.push_back(e);
         }
-        return res;
         
+        return res;
+    }
+    
+    
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> subsets;
+        
+        subsets.push_back({});
+        
+        int N = nums.size();
+        
+        for (int i = 0; i < N; ++i) {
+            vector<vector<int>> new_subsets;
+            for(auto v: subsets) {
+                vector<int> temp = copy_v(v);
+                temp.push_back(nums[i]);
+                new_subsets.push_back(temp);
+            }
+            
+            // new_subsets.push_back({nums[i]});
+            
+            for( auto v: new_subsets) {
+                subsets.push_back(v);
+            }
+        }
+        
+        
+        return subsets;
+       
+            
     }
 };
