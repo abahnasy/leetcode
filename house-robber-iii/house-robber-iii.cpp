@@ -11,33 +11,31 @@
  */
 class Solution {
 public:
-    void dfs(TreeNode* root, int& with_root, int& without_root) {
+    pair<int, int> dfs(TreeNode* root) {
         if(!root) {
-            with_root = 0;
-            without_root = 0;
-            return;
+            return {0, 0};
         }
         if(!root->left && !root->right) {
-            with_root = root->val;
-            without_root = 0;
-            return;
+            return {root->val, 0};
         }
         int left_with_root = 0;
         int left_without_root = 0;
         int right_with_root = 0;
         int right_without_root = 0;
-        dfs(root->left, left_with_root, left_without_root);
-        dfs(root->right, right_with_root, right_without_root);
+        pair<int, int> l_tree = dfs(root->left);
+        pair<int, int> r_tree = dfs(root->right);
         
-        with_root = root->val + left_without_root + right_without_root;
-        without_root = max(left_with_root, left_without_root) + max(right_with_root, right_without_root);
+        return {
+            root->val + l_tree.second + r_tree.second, 
+            max(l_tree.first, l_tree.second) + max(r_tree.first, r_tree.second)
+                };
         
-        return;
+        
+
     }
     int rob(TreeNode* root) {
-        int with_root = 0;
-        int without_root = 0;
-        dfs(root, with_root, without_root);
-        return max(with_root, without_root);
+        
+        pair<int, int> res =  dfs(root);
+        return max(res.first, res.second);
     }
 };
