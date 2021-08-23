@@ -8,10 +8,10 @@ public:
             for(string word: wordDict) {
                 
                 if(word.size() <= i) {
-                    cout << "will check i=" <<i<<", word: " << word << " substring: " << s.substr(i-word.size(), word.size()) <<"\n";
+                    // cout << "will check i=" <<i<<", word: " << word << " substring: " << s.substr(i-word.size(), word.size()) <<"\n";
                     if (word == s.substr(i-word.size(), word.size())) {
-                        cout << "matched word with i=" << i <<", word=" << word <<"\n";
-                        cout << "substring: "<< s.substr(i-word.size(), word.size()) << "\n";
+                        // cout << "matched word with i=" << i <<", word=" << word <<"\n";
+                        // cout << "substring: "<< s.substr(i-word.size(), word.size()) << "\n";
                         if(dp[i-word.size()] == true)
                             dp[i] = true;    
                     }
@@ -20,11 +20,11 @@ public:
                     
             }
         }
-        cout << "Resultant: ";
-        for(auto e: dp) {
-            cout << e <<", ";
-        }
-        cout << endl;
+        // cout << "Resultant: ";
+        // for(auto e: dp) {
+        //     cout << e <<", ";
+        // }
+        // cout << endl;
         
         return dp[s.size()];
     }
