@@ -7,21 +7,21 @@ public:
             dp[i][i] = {nums[i], 0};
         }
         
-        for(int i = 0; i < n; ++i) {
-            for(int j = 0; j < n-1-i; ++j ) {
-                
-                int opt1 = nums[j] + dp[j+1][j+i+1].second;
-                int opt2 = nums[j+1+i]  + dp[j][j+i+1-1].second;
+        for(int len = 1; len < n; ++len) {
+            for(int i = 0; i < n-len; ++i ) {
+                int j = i+len;
+                int opt1 = nums[i] + dp[i+1][j].second;
+                int opt2 = nums[j]  + dp[i][j-1].second;
                 int p1 = 0;
                 int p2 = 0;
                 if(opt1>opt2) {
                     p1 = opt1;
-                    p2 = dp[j+1][j+i+1].first;
+                    p2 = dp[i+1][j].first;
                 } else {
                     p1= opt2;
-                    p2 = dp[j][j+i+1-1].first;
+                    p2 = dp[i][j-1].first;
                 }
-                dp[j][j+i+1] = {p1, p2};
+                dp[i][j] = {p1, p2};
             }
         }
         
