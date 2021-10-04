@@ -6,16 +6,19 @@ public:
         if (n == 2)
             return 1;
         
-        vector<int> dp(n+1, 0);
-        dp[0] = 0;
-        dp[1] = 1;
-        dp[2] = 1;
+        // vector<int> dp(n+1, 0);
+        int dp_1 = 0;
+        int dp_2 = 1;
+        int dp_3 = 1;
         for(int i = 3; i <= n; ++i) {
-            dp[i] = dp[i-1] + dp[i-2] + dp[i-3];
+            int dp_curr = dp_1 + dp_2 + dp_3;
+            dp_1 = dp_2;
+            dp_2 = dp_3;
+            dp_3 = dp_curr;
         }
         
         
-        return dp[n];
+        return dp_3;
         
     }
 };
