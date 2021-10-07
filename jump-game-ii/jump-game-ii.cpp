@@ -1,21 +1,32 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int l = 0; int r = 0;
-        int steps = 0;
-        while(r < nums.size()-1) {
-            // cout << "range: " << l << ", " << r << "\n";
-            int max_r = 0;
-            for(int i = l; i <= r; ++i) {
-                max_r = max(max_r, i + nums[i]);
-                // cout << "done\n";
+        int n = nums.size();
+        if(n <= 1) return 0;
+        vector<int>dp(n, INT_MAX); 
+        dp[0]= 0;
+        
+        for(int i = 1; i < n; ++i ){
+            // bool reachable = false;
+            for(int j = i-1; j >= 0; --j) {
+                if(i - j <= nums[j]) {
+                    dp[i] = min(dp[i], dp[j] + 1);
+                    // reachable = true;
+                    // break;
+                }
             }
-            ++steps;
-            l = r+1;
-            r = max_r;
+            // if(!reachable) return false;
         }
         
-        return steps;
-        
+        return dp[n-1];
     }
+    
 };
+
+/*
+dp: [0,1,1,2,2]
+    [2,3,1,1,4]
+
+
+
+*/
