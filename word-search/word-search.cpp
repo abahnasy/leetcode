@@ -12,13 +12,15 @@ public:
     {
         if(idx == word.size()) return true;
         if(i < 0 || i >= board.size() || j <0 || j >= board[0].size()) return false;
-        if(visited[i][j]) return false;
+        // if(visited[i][j]) return false;
         if(board[i][j] != word[idx]) return false;
-        visited[i][j] = true;
+        // visited[i][j] = true;
+        board[i][j] ='0';
         for(int k = 0; k < 4; ++k) {
             if(bt(board, visited, i+di[k], j+dj[k], word, idx+1)) return true;
         }
-        visited[i][j] = false;
+        // visited[i][j] = false;
+        board[i][j] = word[idx];
         return false;
         
     }
